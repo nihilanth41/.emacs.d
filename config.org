@@ -1,0 +1,130 @@
+#+TITLE: zrr emacs config
+#+OPTIONS: toc:4 h:4
+
+* Reference
+** Emacs reference
+** Org-mode reference
+General commands:
+C-c | -- Make table
+C-c C-l -- Insert link
+
+*** Org-babel 
+**** Extracting source code
+org-babel-tangle-file
+     Bound to: C-c C-v f
+
+* Configuration 
+  :PROPERTIES:
+  :CUSTOM_ID: babel-init
+  :END:
+  <<babel-init>>
+** Emacs initialization
+*** Hooks
+Make compilation window disappear if no errors
+From enberg on #emacs
+
+#+begin_src emacs-lisp :tangle yes
+(setq compilation-finish-function
+  (lambda (buf str)
+    (if (null (string-match ".*exited abnormally.*" str))
+        ;;no errors, make the compilation window go away in a few seconds
+        (progn
+          (run-at-time
+           "2 sec" nil 'delete-windows-on
+           (get-buffer-create "*compilation*"))
+          (message "No Compilation Errors!")))))
+#+end_src
+*** Evil mode
+
+#+begin_src emacs-lisp :tangle yes
+(use-package evil
+ :ensure t
+ :config 
+ (evil-mode t))
+#+end_src
+
+*** Paredit
+#+begin_src emacs-lisp :tangle yes
+(use-package paredit
+ :ensure t
+ :config
+ (paredit-mode t))
+#+end_src
+*** Rcirc
+
+#+begin_src emacs-lisp :tangle yes
+(use-package rcirc
+ :config
+ (progn
+
+    ;; Quit/part messages
+    (setq rcirc-id-string "")
+
+    (rcirc-track-minor-mode)
+
+    (use-package rcirc-color :ensure t)
+
+    (add-hook 'rcirc-mode-hook
+	  (lambda ()
+		(setq rcirc-omit-mode nil)
+		(rcirc-omit-mode)
+		(set (make-local-variable 'scroll-conservatively) 8192)))
+
+    (defun-rcirc-command q (arg)
+    "/q alias for /query"
+    (rcirc-cmd-query arg))
+
+
+
+    ;; (setq rcirc-authinfo '(("freenode" nickserv "zrr" "<PASSWORD>")))
+    (setq rcirc-default-nick "zrr")
+    (setq rcirc-default-user-name "zrr")
+    (setq rcirc-default-full-name "zrr")
+    (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY"))
+    (setq rcirc-server-alist
+	'(("irc.freenode.net"
+	    :channels ("#emacs"))))
+
+    (global-set-key (kbd "C-c I") 'rcirc)))
+#+end_src 
+    
+*** Registers
+
+Register jumping
+C-x r j [ ] 
+
+#+begin_src emacs-lisp :tangle yes
+(set-register ?i '(file . "~/.emacs.d/init.el"))
+(set-register ?o '(file . "~/.emacs.d/config.org"))
+#+end_src
+
+*** Navigation
+#+begin_src emacs-lisp :tangle yes
+(column-number-mode)
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+;; Navigate split windows w/ cursor keys
+(windmove-default-keybindings) 
+#+end_src
+
+    
+
+** Appearance
+   
+#+begin_src emacs-lisp :tangle no
+(linum-relative-mode)
+#+end_src
+
+*** Theme
+#+begin_src emacs-lisp :tangle yes
+(use-package cyberpunk-theme
+ :ensure t
+ :init 
+ (load-theme 'cyberpunk t))
+#+end_src 
+
+
+    
+    
+    
