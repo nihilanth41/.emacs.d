@@ -1,3 +1,4 @@
+;; Set path for custom file
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
@@ -97,6 +98,12 @@
   :ensure t
   :config
   (global-relative-line-numbers-mode))
+
+(use-package show-paren-mode
+  :init
+  (setq show-paren-delay 0.0625)
+  :config
+  (show-paren-mode t))
 
 (use-package undo-tree
   :diminish undo-tree-mode)
