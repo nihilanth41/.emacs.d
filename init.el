@@ -1,17 +1,18 @@
-(setq gc-cons-threshold 400000000)
-;; Startup
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
+;; Disable GUI menus
 (when window-system
 (scroll-bar-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (tooltip-mode -1))
 
-;; 
-(setq inhibit-startup-message t)
-(setq initial-scratch-message "")
+;; Disable CJK coding/encoding 
+(setq utf-translate-cjk-mode nil)
 
-;; Disable CJK coding/encoding (Chinese/Japanese/Korean characters)
-(setq utf-translate-cjk-mode nil) (set-language-environment 'utf-8)
+;; Set UTF8 defaults
+(set-language-environment 'utf-8)
 (setq locale-coding-system 'utf-8)
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
@@ -22,6 +23,7 @@
 (unless (assoc-default "melpa" package-archives)
   (add-to-list 'package-archives
 	       '("melpa" . "http://melpa.org/packages/") t))
+
 (package-initialize)
 
 ;; Ensure use-package
@@ -29,18 +31,33 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; From use-package README
 (eval-when-compile
-  (require 'use-package))
+  (require 'use-package)
+  (require 'diminish)
+  (require 'bind-key))
 
-;; Load config
-;; (org-babel-load-file (concat user-emacs-directory "config.org"))
+(use-package bind-key
+  :ensure t)
+
+(use-package cyberpunk-theme
+ :ensure t
+ :init 
+ (load-theme 'cyberpunk t))
+
+(use-package diminish
+  :ensure t)
+
 (use-package evil
  :ensure t
  :config 
  (evil-mode t))
 
+(use-package magit
+  :ensure t
+  :bind ("C-c g" . magit-status))
+
 (use-package paredit
+  :diminish paredit-mode
   :ensure t
   :init
   (add-hook 'emacs-lisp-mode-hook (lambda () (paredit-mode +1)))
@@ -72,17 +89,30 @@
             :channels ("#emacs"))))
     (global-set-key (kbd "C-c I") 'rcirc)))
 
-(set-register ?i '(file . "~/.emacs.d/init.el"))
-(set-register ?o '(file . "~/.emacs.d/config.org"))
+(use-package relative-line-numbers
+  :ensure t
+  :config
+  (global-relative-line-numbers-mode))
 
+;; Disable startup and scratch messages
+(setq inhibit-startup-message t)
+(setq initial-scratch-message "")
+
+;; Setup registers
+(set-register ?i '(file . "~/.emacs.d/init.el"))
+
+;; Enable column numbers in modeline
 (column-number-mode)
 
-;; Navigate split windows w/ cursor keys
+;; Navigate split windows w/ shift+cursor keys
 (windmove-default-keybindings)
 
-(use-package cyberpunk-theme
- :ensure t
- :init 
- (load-theme 'cyberpunk t))
+;; Ido mode
+(require 'ido)
+(ido-mode t)
 
-(setq gc-cons-threshold 800000)
+
+
+
+
+
