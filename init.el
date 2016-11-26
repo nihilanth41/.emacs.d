@@ -52,6 +52,10 @@
  :config 
  (evil-mode t))
 
+(use-package ido
+  :init
+  (ido-mode t))
+
 (use-package magit
   :ensure t
   :bind ("C-c g" . magit-status))
@@ -94,6 +98,9 @@
   :config
   (global-relative-line-numbers-mode))
 
+(use-package undo-tree
+  :diminish undo-tree-mode)
+
 ;; Disable startup and scratch messages
 (setq inhibit-startup-message t)
 (setq initial-scratch-message "")
@@ -107,9 +114,9 @@
 ;; Navigate split windows w/ shift+cursor keys
 (windmove-default-keybindings)
 
-;; Ido mode
-(require 'ido)
-(ido-mode t)
+;; Yes/No -> y/n
+(fset 'yes-or-no-p 'y-or-n-p)
+
 
 
 
