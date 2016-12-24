@@ -124,6 +124,9 @@
 ;; Yes/No -> y/n
 (fset 'yes-or-no-p 'y-or-n-p)
 
+;; Automatically follow symlinks to version controlled files
+(setq vc-follow-symlinks t)
+
 
 
 
