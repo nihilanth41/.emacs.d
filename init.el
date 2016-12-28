@@ -127,9 +127,11 @@
 ;; Automatically follow symlinks to version controlled files
 (setq vc-follow-symlinks t)
 
-
-
-
+;; For steam.el (just for fun)
+(use-package steam
+  :ensure t
+  :config
+  (setq steam-username "nihilanth41"))
 
 
 
