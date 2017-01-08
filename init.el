@@ -114,6 +114,8 @@
 
 ;; Setup registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
+(set-register ?o '(file . "~/org/emacs.org"))
+(set-register ?s '(file . "~/org/settings.org"))
 
 ;; Enable column numbers in modeline
 (column-number-mode)
