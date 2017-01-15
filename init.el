@@ -135,5 +135,8 @@
   :config
   (setq steam-username "nihilanth41"))
 
-
+;; Emacs server
+(require 'server)
+(unless (server-running-p)
+  (server-start))
 
