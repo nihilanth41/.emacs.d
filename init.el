@@ -90,7 +90,7 @@
     (setq rcirc-default-full-name "zrr")
     (setq rcirc-omit-responses '("JOIN" "PART" "QUIT" "NICK" "AWAY"))
     (setq rcirc-server-alist
-        '(("irc.freenode.net"
+        '(("irc.freenode.net" :port 6697 :encryption tls
             :channels ("#emacs"))))
     (global-set-key (kbd "C-c I") 'rcirc)))
 
