@@ -114,7 +114,7 @@
 
 ;; Setup registers
 (set-register ?i '(file . "~/.emacs.d/init.el"))
-(set-register ?o '(file . "~/org/emacs.org"))
+(set-register ?e '(file . "~/org/emacs.org"))
 (set-register ?s '(file . "~/org/settings.org"))
 
 ;; Enable column numbers in modeline
@@ -140,3 +140,8 @@
 (unless (server-running-p)
   (server-start))
 
+;; Backup / Temp files
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+;; Set column for auto line wrapping
+(setq-default fill-column 80)
