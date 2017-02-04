@@ -145,3 +145,6 @@
 
 ;; Set column for auto line wrapping
 (setq-default fill-column 80)
+
+;; Auto revert buffers when associated files change on disk
+(global-auto-revert-mode t)
