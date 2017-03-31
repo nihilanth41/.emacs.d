@@ -148,3 +148,11 @@
 
 ;; Auto revert buffers when associated files change on disk
 (global-auto-revert-mode t)
+
+;; Flyspell hooks
+(add-hook 'c-mode-hook
+	  (lambda ()
+	    (flyspell-prog-mode)))
+
+;; Don't print messages when checking words for performance reasons
+(setq flyspell-issue-message-flag nil)
